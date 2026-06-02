@@ -1,0 +1,28 @@
+---
+title: "Aim1_barriers_correlation"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(corrplot)
+df <- read.csv("C://Users//Nick//Desktop//KSurvey3.1.21.csv")
+```
+```{r}
+
+df1 <- df[, 39:60]
+co <- cor(df1, use="complete.obs")
+corrplot::corrplot(co)
+
+```
+```{r}
+
+
+png(file="Aim1BarriersPlot.png",
+width=1000, height=1000)
+df1 <- df[, 39:60]
+co <- cor(df1, use="pairwise.complete.obs")
+testRes = cor.mtest(df1, conf.level = 0.95)
+corrplot::corrplot(co, p.mat = testRes$p, method = 'number', diag = FALSE, type = 'upper', insig = 'blank')
+dev.off()
+```
